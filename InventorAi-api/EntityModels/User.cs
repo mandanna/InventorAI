@@ -31,13 +31,15 @@ public partial class User
 
     public DateTime? UpdatedAt { get; set; }
 
-    public virtual ICollection<Ailog> Ailogs { get; set; } = new List<Ailog>();
+    public int? StoreId { get; set; }
 
-    public virtual ICollection<License> Licenses { get; set; } = new List<License>();
+    public virtual ICollection<Ailog> Ailogs { get; set; } = new List<Ailog>();
 
     public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
 
     public virtual Role? Role { get; set; }
 
     public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
+
+    public virtual Store? Store { get; set; }
 }

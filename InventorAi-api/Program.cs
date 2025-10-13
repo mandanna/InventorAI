@@ -7,6 +7,9 @@ using InventorAi_api.Interfaces;
 using InventorAi_api.Services;
 using InventorAi_api.Middleware;
 using System.Security.Claims;
+using InventorAi_api.Repository.Interfaces;
+using InventorAi_api.Repository;
+using InventorAi_api.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +60,7 @@ var jwt = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.UTF8.GetBytes(jwt["Secret"]);
 #endregion
 
+
 #region Authentication + JWT Bearer
 builder.Services.AddAuthentication(options =>
 {
@@ -83,10 +87,16 @@ builder.Services.AddAuthentication(options =>
 
 // Authorization (roles-based)
 builder.Services.AddAuthorization();
-
-// Register your services
+builder.Services.AddAutoMapper(cfg =>
+{
+    // optional config if you need customizations
+}, typeof(AutoMapperProfile).Assembly);
+// Registering services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILicenseService, LicenseService>();
+
+//Registering Repo
+builder.Services.AddScoped<ILicenseRepo, LicenseRepo>();
 
 
 var app = builder.Build();
