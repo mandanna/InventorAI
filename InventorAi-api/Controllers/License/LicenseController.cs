@@ -31,7 +31,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput, "One or more required fields are missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input, "One or more required fields are missing")
                 });
             }
             var response = await _licenseService.CreateLicenseForStore(licenseRequest);
@@ -46,7 +46,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput, "Store id is missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input, "Store id is missing")
                 });
             }
             var response = await _licenseService.GetStoreLicenseAsync(storeId);
@@ -61,7 +61,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput, "One or more required fields are missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input, "One or more required fields are missing")
                 });
             }
             var response = await _licenseService.UpdateStoreLicense(licenseUpdateRequest);
@@ -77,7 +77,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput, "Store id is missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input, "Store id is missing")
                 });
             }
             var reponse = await _licenseService.DeleteLicenseByStoreId(storeId);
@@ -94,7 +94,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput, "Store id is missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input, "Store id is missing")
                 });
             }
             var reponse = await _licenseService.ToggleLicenseStatus(storeId);
@@ -117,7 +117,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput, "License id is missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input, "License id is missing")
                 });
             }
             var response = await _licenseService.GetLicenseByLicenseIdAsync(licenseId);
@@ -131,7 +131,7 @@ namespace InventorAi_api.Controllers
                 return BadRequest(new ServiceResponse<object>
                 {
                     Success = false,
-                    Error = ErrorHelper.FromErrorCode(ErrorCode.InvalidInput,"License key is missing")
+                    Error = ErrorHelper.FromErrorCode(ErrorCode.Invalid_Input,"License key is missing")
                 });            
             }
             var response = await _licenseService.ValidateLicenseByKey(key);
