@@ -225,7 +225,7 @@ namespace InventorAi_api.Services
                 var license = await _licenseRepo.GetLicenseByKeyAsync(key);
                 if (license == null)
                 {
-                    return new ServiceResponse<LicenseServiceResponse> { Success = false, Error = ErrorHelper.FromErrorCode(ErrorCode.NotFound, "License not found.") };
+                    return new ServiceResponse<LicenseServiceResponse> { Success = false, Error = ErrorHelper.FromErrorCode(ErrorCode.Not_Found, "License not found.") };
                 }
                 if (!license.IsActive)
                 {
@@ -237,7 +237,7 @@ namespace InventorAi_api.Services
                 }
                 if (license.Store == null)
                 {
-                    return new ServiceResponse<LicenseServiceResponse> { Success = false, Error = ErrorHelper.FromErrorCode(ErrorCode.NotFound, "Store not found for this license key.") };
+                    return new ServiceResponse<LicenseServiceResponse> { Success = false, Error = ErrorHelper.FromErrorCode(ErrorCode.Not_Found, "Store not found for this license key.") };
                 }
                 var mappedResponse = _mapper.Map<LicenseServiceResponse>(license);
                 return new ServiceResponse<LicenseServiceResponse> { Success = true, Data = mappedResponse };
