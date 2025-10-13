@@ -1,4 +1,5 @@
 ﻿using InventorAi_api.Interfaces;
+using InventorAi_api.Repository.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -11,19 +12,19 @@ namespace InventorAi_api.Middleware
         {
             _next = next;
         }
-        public async Task InvokeAsync(HttpContext context, ILicenseService licenseService)
+        public async Task InvokeAsync(HttpContext context, ILicenseRepo licenseRepo)
         {
             // Skip if request is NOT protected (like login/register)
             if (context.User.Identity?.IsAuthenticated == true)
             {
-                foreach (var claim in context.User.Claims)
-                {
-                    Console.WriteLine($"{claim.Type} = {claim.Value}");
-                }
+
+                var storeId = context.User.FindFirst("StoreId")?.Value;
                 var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+              //  var storeIdClaim = context..FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (int.TryParse(userIdClaim, out int userId))
                 {
-                    var license = await licenseService.GetUserLicenseAsync(userId);
+                    int.TryParse(storeId,out var st);
+                    var license = await licenseRepo.GetStoreLicenseAsync(st);
 
                     if (license == null || !license.IsActive || license.ExpiryDate < DateTime.UtcNow)
                     {

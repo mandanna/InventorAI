@@ -50,6 +50,8 @@ public partial class InventorAiContext : DbContext
 
     public virtual DbSet<Status> Statuses { get; set; }
 
+    public virtual DbSet<Store> Stores { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -131,9 +133,9 @@ public partial class InventorAiContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.LicenseKey).HasMaxLength(100);
 
-            entity.HasOne(d => d.User).WithMany(p => p.Licenses)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_Licenses_Users");
+            entity.HasOne(d => d.Store).WithMany(p => p.Licenses)
+                .HasForeignKey(d => d.StoreId)
+                .HasConstraintName("FK_Licenses_Stores");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -335,11 +337,20 @@ public partial class InventorAiContext : DbContext
             entity.Property(e => e.StatusName).HasMaxLength(50);
         });
 
+        modelBuilder.Entity<Store>(entity =>
+        {
+            entity.HasKey(e => e.StoreId).HasName("PK__Stores__3B82F1018B72491C");
+
+            entity.Property(e => e.Address).HasMaxLength(255);
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.StoreName).HasMaxLength(150);
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C01EAA525");
-
-            entity.HasIndex(e => e.Username, "UQ__Users__536C85E40B9C72F2").IsUnique();
 
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")
@@ -359,6 +370,11 @@ public partial class InventorAiContext : DbContext
                 .HasForeignKey(d => d.RoleId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK_Users_Roles");
+
+            entity.HasOne(d => d.Store).WithMany(p => p.Users)
+                .HasForeignKey(d => d.StoreId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Users_Stores");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,5 +1,6 @@
 ﻿using InventorAi_api.Interfaces;
 using InventorAi_api.Models;
+using InventorAi_api.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,37 +10,37 @@ namespace InventorAi_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly ILicenseService _licenseService;
+        private readonly ILicenseRepo _licenseRepo;
 
-        public AuthController(IAuthService authService, ILicenseService licenseService)
+        public AuthController(IAuthService authService, ILicenseRepo licenseRepo)
         {
             _authService = authService;
-            _licenseService = licenseService;
+            _licenseRepo = licenseRepo;
         
         }
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegistrationRequest dto)
         {
             var result = await _authService.RegisterAsync(dto);
             return Ok(result);
         }
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(UserLoginRequest dto)
         {
             var user = await _authService.LoginAsync(dto);
 
             // Check license
-            var license = await _licenseService.GetUserLicenseAsync(user.UserId);
+            var license = await _licenseRepo.GetStoreLicenseAsync(user.StoreId);
             if (license == null || !license.IsActive || license.ExpiryDate < DateTime.UtcNow)
                 return Unauthorized("License invalid or expired");
 
             return Ok(user);
         }
         [Authorize]  // Any logged-in user
-        [HttpGet("profile")]
+        [HttpGet("Profile")]
         public IActionResult GetProfile()
         {
             var name = User.FindFirst(ClaimTypes.Name)?.Value;

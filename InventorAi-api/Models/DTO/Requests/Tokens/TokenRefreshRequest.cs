@@ -1,4 +1,4 @@
-﻿namespace InventorAi_api.Models
+﻿namespace InventorAi_api.Models.Tokens
 {
     public class TokenRefreshRequest
     {

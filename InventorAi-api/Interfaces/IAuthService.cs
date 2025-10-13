@@ -5,7 +5,7 @@ namespace InventorAi_api.Interfaces
     public interface IAuthService
     {
         Task<AuthResponse> LoginAsync(UserLoginRequest loginRequest);
-        Task<AuthResponse> RegisterAsync(UserRegistrationRequest registrationRequest);
+        Task<ServiceResponse<AuthResponse>> RegisterAsync(UserRegistrationRequest registrationRequest);
         Task<AuthResponse> RefreshTokenAsync(string refreshtoken);
     }
 }
