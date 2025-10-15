@@ -9,8 +9,8 @@ namespace InventorAi_api.Helpers
         {
             var defaultMessage = code switch
             {
-                ErrorCode.InvalidInput => "Invalid input provided.",
-                ErrorCode.NotFound => "Requested record not found.",
+                ErrorCode.Invalid_Input => "Invalid input provided.",
+                ErrorCode.Not_Found => "Requested record not found.",
                 ErrorCode.Unauthorized => "User is not authorized.",
                 ErrorCode.InActive =>"InActive",
                 ErrorCode.Expired => "Expired",
