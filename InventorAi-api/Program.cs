@@ -94,9 +94,11 @@ builder.Services.AddAutoMapper(cfg =>
 // Registering services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILicenseService, LicenseService>();
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
 
 //Registering Repo
 builder.Services.AddScoped<ILicenseRepo, LicenseRepo>();
+builder.Services.AddScoped<ICategoriesRepo, CategoriesRepo>();
 
 
 var app = builder.Build();

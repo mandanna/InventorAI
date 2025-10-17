@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using InventorAi_api.EntityModels;
 using InventorAi_api.Models;
+using InventorAi_api.Models.DTO.Requests.Categories;
 namespace InventorAi_api.Mappings
 {
-    public class AutoMapperProfile:Profile
+    public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
@@ -14,7 +15,11 @@ namespace InventorAi_api.Mappings
 
             CreateMap<License, LicenseServiceResponse>();
 
-            //CreateMap<List<License>, List<LicenseServiceResponse>>();
+            CreateMap<CategoryRequest, Category>();
+            CreateMap<CategoryUpdateRequest, Category>();
+            CreateMap<Category, CategoryResponse>();
+
+
         }
     }
 }

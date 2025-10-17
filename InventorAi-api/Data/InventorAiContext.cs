@@ -98,6 +98,12 @@ public partial class InventorAiContext : DbContext
 
             entity.Property(e => e.CategoryDescription).HasMaxLength(300);
             entity.Property(e => e.CategoryName).HasMaxLength(100);
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+            entity.HasOne(d => d.Store).WithMany(p => p.Categories)
+                .HasForeignKey(d => d.StoreId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("fk_Categories_Stores");
         });
 
         modelBuilder.Entity<Currency>(entity =>
@@ -351,6 +357,8 @@ public partial class InventorAiContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C01EAA525");
+
+            entity.HasIndex(e => e.Email, "UQ_Users_Email").IsUnique();
 
             entity.Property(e => e.CreatedDate)
                 .HasDefaultValueSql("(getdate())")

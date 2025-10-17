@@ -13,6 +13,8 @@ public partial class Store
 
     public DateTime CreatedAt { get; set; }
 
+    public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
+
     public virtual ICollection<License> Licenses { get; set; } = new List<License>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
