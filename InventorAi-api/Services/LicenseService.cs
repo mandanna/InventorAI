@@ -187,7 +187,7 @@ namespace InventorAi_api.Services
                 }
                 license.IsActive = !license.IsActive;
                 await _context.SaveChangesAsync();
-                return new ServiceResponse<object> { Success = true, Message = $"License is {(license.IsActive == true ? "ACTIVE" : "Inactive")}" };
+                return new ServiceResponse<object> { Success = true, Message = $"License is {(license.IsActive == true ? "Active" : "Inactive")}" };
             }
             catch (DbUpdateException dbex)
             {

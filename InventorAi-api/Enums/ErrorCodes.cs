@@ -9,7 +9,8 @@
             Unauthorized,
             InternalServerError,
             InActive,
-            Expired
+            Expired,
+            DbException
         }
     }
 }

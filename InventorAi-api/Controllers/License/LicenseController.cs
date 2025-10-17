@@ -86,7 +86,7 @@ namespace InventorAi_api.Controllers
         }
 
         [HttpPut("ToggleLicenseStatus")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> ToggleLicenseStatus(int storeId)
         {
             if (storeId <= 0)
